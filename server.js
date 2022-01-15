@@ -4,26 +4,28 @@ const app = express();
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv')
+
 dotenv.config()
 
 app.use(cors())
    .use(bodyParser.json())
 
-app.post("/refresh", (req, res) => {
-  const refreshToken = req.body.refreshToken
+app.post('/slam', (req, res) => {
+  const refreshToken = req.body.refresh_token
   const spotifyApi = new SpotifyWebApi({
-    redirectUri: process.env.REDIRECT_URI,
-    clientId: process.env.CLIENT_ID,
-    clientSecret: process.env.CLIENT_SECRET,
-    refreshToken,
+    redirectUri: 'http://localhost:3000/',
+    clientId: process.env.REACT_APP_CLIENT_ID,
+    clientSecret: process.env.REACT_APP_CLIENT_SECRET,
+    refreshToken
   })
   
   spotifyApi
     .refreshAccessToken()
     .then(data => {
+      console.log(data.body.access_token)
       res.json({
-        accessToken: data.body.accessToken,
-        expiresIn: data.body.expiresIn,
+        expiresIn: data.body.expires_in,
+        accessToken: data.body.access_token
       })
     })
     .catch(err => {
@@ -34,7 +36,6 @@ app.post("/refresh", (req, res) => {
 
 app.post('/login', (req, res) => {
   const code = req.body.code
-  console.log(process.env.REACT_APP_CLIENT_ID)
   const spotifyApi = new SpotifyWebApi({
     clientId: process.env.REACT_APP_CLIENT_ID,
     clientSecret: process.env.REACT_APP_CLIENT_SECRET,
@@ -48,8 +49,8 @@ app.post('/login', (req, res) => {
         accessToken: data.body.access_token,
         refreshToken: data.body.refresh_token
       })
-    }).catch(err => {
-        console.log(err)
+    }).catch(error => {
+        console.log(error)
         res.sendStatus(400)
     })
 
