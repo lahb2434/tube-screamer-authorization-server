@@ -10,7 +10,7 @@ dotenv.config()
 app.use(cors())
    .use(bodyParser.json())
 
-app.post('/slam', (req, res) => {
+app.post('/refresh', (req, res) => {
   const refreshToken = req.body.refresh_token
   const spotifyApi = new SpotifyWebApi({
     redirectUri: 'http://localhost:3000/',
@@ -22,7 +22,6 @@ app.post('/slam', (req, res) => {
   spotifyApi
     .refreshAccessToken()
     .then(data => {
-      console.log(data.body.access_token)
       res.json({
         expiresIn: data.body.expires_in,
         accessToken: data.body.access_token
@@ -49,6 +48,8 @@ app.post('/login', (req, res) => {
         accessToken: data.body.access_token,
         refreshToken: data.body.refresh_token
       })
+      spotifyApi.setAccessToken(data.body.access_token);
+      spotifyApi.setRefreshToken(data.body.refresh_token);
     }).catch(error => {
         console.log(error)
         res.sendStatus(400)
@@ -57,4 +58,4 @@ app.post('/login', (req, res) => {
 });
 
 
-app.listen(3001);
+app.listen(8008);
