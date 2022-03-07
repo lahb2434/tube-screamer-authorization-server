@@ -27,7 +27,7 @@ server.post('/login', (req, res) => {
       res.json({
         expiresIn: data.body.expires_in,
         accessToken: data.body.access_token,
-        refreshToken: data.body.refresh_token
+        // refreshToken: data.body.refresh_token
       })
       spotifyApi.setAccessToken(data.body.access_token);
       spotifyApi.setRefreshToken(data.body.refresh_token);
