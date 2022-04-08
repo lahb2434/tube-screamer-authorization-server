@@ -11,8 +11,8 @@ const spotifyApi = new SpotifyWebApi()
 
 spotifyApi.setCredentials({
   redirectUri: 'http://localhost:3000/',
-  clientId: process.env.REACT_APP_CLIENT_ID,
-  clientSecret: process.env.REACT_APP_CLIENT_SECRET,
+  clientId: process.env.CLIENT_ID,
+  clientSecret: process.env.CLIENT_SECRET,
 });
 
 server
