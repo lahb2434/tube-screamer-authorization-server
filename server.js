@@ -21,13 +21,13 @@ server
 
 server.post('/login', (req, res) => {
   const code = req.body.code
+  
   spotifyApi
     .authorizationCodeGrant(code)
     .then( data => { 
       res.json({
         expiresIn: data.body.expires_in,
         accessToken: data.body.access_token,
-        // refreshToken: data.body.refresh_token
       })
       spotifyApi.setAccessToken(data.body.access_token);
       spotifyApi.setRefreshToken(data.body.refresh_token);
@@ -40,13 +40,6 @@ server.post('/login', (req, res) => {
 
 server.post('/refresh', (req, res) => {
   console.log(spotifyApi)
-  // const refreshToken = req.body.refresh_token
-  // spotifyApi = new SpotifyWebApi({
-  //   redirectUri: 'http://localhost:3000/',
-  //   clientId: process.env.REACT_APP_CLIENT_ID,
-  //   clientSecret: process.env.REACT_APP_CLIENT_SECRET,
-  //   refreshToken
-  // })
   
   spotifyApi
     .refreshAccessToken()
@@ -76,6 +69,7 @@ server.post('/search', (req, res) => {
       console.log(err)
       res.sendStatus(400)
     })
+})
 
 server.post('/requestAccess', (req, res) => {
   spotifyApi
@@ -84,7 +78,5 @@ server.post('/requestAccess', (req, res) => {
       console.log(response)
     })
 })
-})
-
 
 server.listen(8008);
