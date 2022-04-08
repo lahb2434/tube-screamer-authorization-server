@@ -6,7 +6,7 @@ Server dedicated to requesting authorization and retreiving song information fro
 Install using [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 
 ```bash
-run $ npm install
+$ npm install
 ```
 Create .env file<br>
 Set Spotify Web API Client_ID and Client_Secret in .env file
@@ -16,6 +16,11 @@ CLIENT_ID = 02ee4d58dclientID20aab88838
 CLIENT_SECRET = 6a15d74dclientSecret4a58528
 ```
 To get Client_ID and Client_Secret navigate to [Spotify Web API](https://developer.spotify.com/dashboard/applications), login or create an account, then click on the create an app button, follow prompts.
+
+To start server 
+```
+$ npm run dev
+```
 
 
 ## Usage
